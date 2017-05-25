@@ -44,7 +44,10 @@ Otherwise runpy will act as before.
 ExtensionFileLoader Changes
 ---------------------------
 
-The method ``exec_in_module`` will find a module def according to spec.
+ExtensionFileLoader will get an implementation of ``exec_in_module``
+that calls same-named function at the C-level.
+
+The function ``exec_in_module`` will find a module def according to spec.
 
 If def belongs to a single-phase initialization module,
 an import exception will be raised since this is not feasible
