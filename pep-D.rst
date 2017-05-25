@@ -15,12 +15,6 @@ Post-History:
 Abstract
 ========
 
-
-
-
-Specification
-=============
-
 This PEP proposes implementation that allows built-in and extension
 modules to be executed in the ``__main__`` namespace using
 the `PEP 489`_ multi-phase initialization.
@@ -32,30 +26,25 @@ using following syntax::
     This is a test module named __main__.
 
 
-Python-level changes
---------------------
+Specification
+=============
 
-There are going to be few changes at the Python level.
-Affected files are going to be Lib/runpy.py and
-Lib/importlib/_bootstrap_external.py.
+A new optional method for importlib loaders will be added.
+This method will be called ``exec_in_module`` and will take two
+positional arguments: module spec and already existing module.
+Any module attributes already present inside the module will
+be ignored.
 
-A new optional method for loaders will be added. This method is
-called ``exec_in_module`` and will take two positional arguments:
-module spec and already initialized module. It will then passe these
-arguments to new C function inside the _imp module called the same name.
-
-That means runpy will look for this new attribute and if it is present,
+Runpy will look for this new loader method and if it is present,
 it will execute it and return results.
 
+Otherwise runpy will act as before.
 
-C-level changes
----------------
 
-A new function will have been added.
+ExtensionFileLoader Changes
+---------------------------
 
-This function will be called ``exec_in_module`` and will take two arguments:
-a spec, and a module in which's namespace should be the code
-executed. This function will find a module def according to spec.
+The method ``exec_in_module`` will find a module def according to spec.
 
 If def belongs to a single-phase initialization module,
 an import exception will be raised since this is not feasible
