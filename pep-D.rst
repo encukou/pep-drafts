@@ -45,7 +45,7 @@ ExtensionFileLoader Changes
 ---------------------------
 
 ExtensionFileLoader will get an implementation of ``exec_in_module``
-that calls same-named function at the C-level.
+that calls same-named function in the ``_imp`` module.
 
 The function ``exec_in_module`` will find a module def according to spec.
 
