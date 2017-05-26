@@ -59,7 +59,7 @@ with Cython will typically not change the module's functionality, allowing
 Cython-specific features to be added gradually.
 This PEP will allow Cython extension modules to behave the same as their Python
 counterparts when run using the ``-m`` option.
-Cython developers consider the feature “worth implementing” (see
+Cython developers consider the feature worth implementing (see
 `Cython issue 1715`_).
 
 
@@ -116,6 +116,12 @@ Since the ``__main__`` module is not created as an extension module,
 its ``ht_state`` is normally ``NULL``.
 Before initializing an extension module in ``__main__``'s context, its module
 state will be allocated according to the ``PyModuleDef`` of that module.
+
+While PEP 489 was designed to make these changes generally possible,
+it's necessary to decouple module discovery, creation, and initialization
+steps for extension modules, so that anothe module can be used instead of
+a newly initialized one, and the functionality needs to be added to
+``runpy`` and ``importlib``.
 
 
 Specification
